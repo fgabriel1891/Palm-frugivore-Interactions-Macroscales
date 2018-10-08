@@ -54,11 +54,19 @@
 
 ### 2) Instructions 
 
-1) Open the R container folder 
+1) Clone or download the repository
 
-2) Run ReplicateAnalisis.R and ReplicateFigures.R scripts (**other scripts are sourced within**)
+2) Open the R container folder 
+
+3) Run ReplicateAnalisis.R and ReplicateFigures.R scripts (**other scripts are sourced within**)
 
 **NOTE**:  Modularity replicates are TIME CONSUMING, currently those are commented in ReplicateAnalisis.R // If you want to re-run them and see the output uncomment those first. 
+
+4) Please open an issue to report comments and/or bugs. 
+
+#### Contact: 
+
+[Gabriel Muñoz](mailto:fgabriel1891@gmail.com)
 
 -------------
 
