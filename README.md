@@ -1,8 +1,3 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
 
 # Source code to replicate the analisis and figures presented in the article:
 
