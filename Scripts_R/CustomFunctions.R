@@ -1,6 +1,6 @@
 ## Functions 
 
-source("Scripts_R//Beckett2016LPA_wb_plus.R")
+source("Scripts_R/Beckett2016LPA_wb_plus.R")
 
 ### Helper function to calculate the Sampling completeness of a given dataset with a column named 
 # PALM for palms and referenceKey for the studies, x represent the name of the palm to calculate the SC 
@@ -23,9 +23,58 @@ makeSC = function(dataset, x){
 makeSAC2 = function(dataset, x){ 
   SROm = droplevels(dataset[dataset$PALM == x,])
   SROm1 = table(SROm$referenceKey,SROm$FRUGIVORE)
-  Acum = vegan::specaccum(SROm1)
+  Acum = vegan::specaccum(SROm1, "random", 100)
   return(Acum)
 }
+
+
+## Function to make individual frugivore sampling completeness curve accumulation plots
+makeFrugPlot = function(dataset, x){ 
+  col.afro <- "#f1a340"
+  col.neo  <- "#998ec3"
+  
+  SROm = dataset[dataset$PALM == x,]
+  SROm = droplevels(SROm)
+  SROm1 = table(SROm$referenceKey,SROm$FRUGIVORE)
+  Acum = vegan::specpool(SROm1)[c("Species", "chao", "chao.se")]
+  
+  col = ifelse(unique(SROm$biogeographicRegion) == "Neotropics",
+               col.neo, col.afro)
+  ylim = Acum$chao + Acum$chao.se
+  par(las = 1, mar = c(5,5,1,0.5))
+  plot(vegan::specaccum(SROm1, "random", 100), 
+       xlab = "Number of articles",
+       ylab = "Frugivores", 
+       ylim = c(0, ylim + ylim/3),
+       xlim = c(1, length(rownames(SROm1))),
+       col = col, 
+       lwd = 2,
+       xaxt = "n",
+       main = x,
+       cex.lab = 1.5,
+       cex.main = 1.3)
+  axis(1, 
+       seq(1, length(rownames(SROm1)), 1),
+       seq(1, length(rownames(SROm1)), 1))
+  legend("topright",
+         legend = unique(SROm$biogeographicRegion),
+         pch = 16, 
+         col = col,
+         bty = "n", 
+         cex = 1)
+  abline(h=Acum$chao,
+         col = "red", 
+         lwd = 3)
+  abline(h=c(Acum$chao-Acum$chao.se,
+             Acum$chao+Acum$chao.se), 
+         lty = 2, 
+         col = "red") 
+  legend("topleft" , 
+         paste("SC = ", round(Acum$Species/Acum$chao, 3) * 100, "%"),
+         bty = "n", cex = 1)}
+
+
+
 
 ## Function to calculate network indices and compare the two networks at the "meta-network" level 
 

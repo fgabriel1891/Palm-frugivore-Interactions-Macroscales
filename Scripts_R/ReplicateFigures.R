@@ -38,9 +38,10 @@ col.neo  <- "#998ec3"
 
 ## a) Accumulation curves representing sampling completeness (SC) of palm-frugivore interaction datasets in each biogeographic region (Neotropics, Afrotropics). 
 
-setEPS() # Open EPS file
-postscript("figs/SamplingCompletenessA.eps") # Set directory to save image
-par(las = 1, mar =  c(6,6,2,2) ) # plot settings 
+pdf("publicationFigs/Figure2.pdf",
+    width = 15, height = 10, pointsize = 15)
+layout(matrix(c(1,2), 1,2, byrow = T))
+par(las = 1, mar =  c(2,6,2,2) ) # plot settings 
 plot(spAcum1, 
      ylim = c(0,700),
      xlim = c(0,800),
@@ -48,10 +49,12 @@ plot(spAcum1,
      xlab = "Palm species",
      col = col.neo, 
      cex.axis = 1.5,
-     cex.lab = 1.5
+     cex.lab = 2
 )
-title(ylab="Frugivore species", line = 4, 
-      cex.lab=1.5)
+mtext("a)", 2, line = 4, at = 700, cex = 2)
+title(ylab="Frugivore species", 
+      line = 4, 
+      cex.lab=2)
 plotrix::ablineclip(h = est1$chao, 
                     x1 = -50,
                     x2 = 750,
@@ -76,11 +79,13 @@ plotrix::ablineclip(h = est1$chao+est1$chao.se,
                     lty = 2, 
                     col = col.neo,
                     lwd = 2)
-
-legend(0,550,fill = c(col.neo, col.afro),
-       legend = c("Neotropics SC = 47%",
-                  "Afrotropics SC = 37%"),
-       bty = "n", cex = 1.5)
+legend(0,500 , fill = c(col.neo, col.afro),
+       legend = c(paste0("Neotropics = ", 
+                          round(SC1,2)),
+                  paste0("Afrotropics = ",
+                         round(SC2,2), "0")),
+       bty = "n", cex = 1.5,
+       title = "Sampling completeness (%)")
 plotrix::ablineclip(h = est2$chao, 
                     x1 = -50,
                     x2 = 220,
@@ -109,24 +114,19 @@ plotrix::ablineclip(h = est2$chao+est2$chao.se,
 plot(spAcum2, add =T,
      col = col.afro)
 
-dev.off()
-
-setEPS() # Open EPS file
-postscript("figs/SamplingCompletenessB.eps") # Set directory to save image
-## b) individual palm SC (expected/observed) in function of the number of studies and palm degree. 
-
 par(las = 1,  mar = c(6,6,2,2))
 plot(SC~NoStudies, 
      data = SCTableNeo[!SCTableNeo$NoStudies == 1,],
      col = col.neo, 
      pch = 16, 
      cex = log1p(SCTableNeo$NoInteractions[!SCTableNeo$NoStudies == 1]),
-     xlab = "No. studies",
-     ylab = "SC %(observed degree/expected degree) ",
+     xlab = "Number of articles",
+     ylab = "Sampling completeness (%)",
      ylim = c(1,100),
      xlim = c(0,25),
-     cex.lab = 1.5, 
+     cex.lab = 2, 
      cex.axis = 1.5)
+mtext("b)", 2, line = 4, at = 100, cex = 2)
 points(SC~NoStudies,
        data = SCTableAfr[!SCTableAfr$NoStudies == 1,],
        col = col.afro, 
@@ -147,6 +147,7 @@ points(SC~NoStudies,
 legend("bottomright", 
        col = c(col.neo, col.afro),
        pch = c(16,16),
+       cex = 1.5,
        c("Neotropics" ,"Afrotropics"), 
        bty = "n")
 dev.off()
@@ -160,12 +161,16 @@ dev.off()
 #--------------------------------------------------
 
 #### FIGURE 4: REGIONAL META-NETWORKS
-
+pdf("publicationFigs/Net.pdf", width = 10, height = 20)
+layout(matrix(c(1,2), 2, 1, byrow = T))
 ## Neotropics
+par(mar = c(1,17,2,2), 
+    mai = c(0.2,0.2,0.2,0.2),
+    oma = c(2,2,2,2))
 
 ## Chord Diagram for the Neotropics
 # Build interactions matrix (at the family level to visualize better)
-cex = 0.3 # set label size
+cex = 0.5 # set label size
 int.fam.am <- table(neo$frugFamily,neo$PALM) # Create matrix
 int.fam.am[int.fam.am >= 1] <- 1 # Make matrix binary
 fam.matrix.am <- unclass(int.fam.am)
@@ -197,8 +202,8 @@ link.col.am <- rn.am[,c(2,1,4)]
 
 
 circos.clear() # To ensure circos environment is clear
-setEPS() ## Open EPS space
-postscript("figs/ChordDiagramNeo.eps") # Define directory to save the figure
+# setEPS() ## Open EPS space
+# postscript("figs/ChordDiagramNeo.eps") # Define directory to save the figure
 circos.par(start.degree=180, track.margin=c(0,0.01)) # initial settings
 
 chordDiagram(fam.matrix.am,
@@ -233,9 +238,13 @@ circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) {
 legend("bottomleft", fill=c(unique(colNeo$col),"#a3ae2c"), 
        legend=c("MAMMALS", "FISH","BIRDS", "REPTILES","BEETLES","CRABS", "PALMS"),
        bty="n", 
-       cex=0.3, border = c(unique(colNeo$col),"#a3ae2c"))
+       cex=1.3, border = c(unique(colNeo$col),"#a3ae2c"))
+legend("topleft", 
+       "a) Neotropics", 
+       bty = "n",
+       cex = 2)
 circos.clear()
-dev.off()
+#dev.off()
 
 
 # build the interaction matrix 
@@ -269,11 +278,9 @@ names(pallete.af)<-c(as.character(col.af$frugFamily), colnames(fam.matrix.af))
 # Link colors 
 rn<-unique(col.af)
 link.col <- rn[,c(2,1,4)]
-cex = 0.3 # set label size
+cex = 0.4 # set label size
 circos.clear()
 ## Afrotropics
-setEPS() ## Open EPS space
-postscript("figs/ChordDiagramAfr.eps") # Define directory to save the figure
 circos.par(start.degree=180, track.margin=c(0,0.01), gap.degree= 1)
 chordDiagram(fam.matrix.af, 
              annotationTrack = "grid",
@@ -297,31 +304,37 @@ circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) {
 # highlight.sector(unique(plot.africa$Frug_Family[plot.africa$CLASS == "MAMMAL"]), track.index = 2, col = "#7c4133" )
 # highlight.sector(unique(plot.africa$Frug_Family[plot.africa$CLASS == "BIRDS"]), track.index = 2, col = "#efd14a" )
 
-legend("bottomleft", fill=c(unique(col.af$col),"#a3ae2c"), legend=c("MAMMALS","BIRDS", "PALMS"), bty="n", cex=cex, border = c(unique(col.af$col),"#a3ae2c"))
+#legend("bottomleft", fill=c(unique(col.af$col),"#a3ae2c"), legend=c("MAMMALS","BIRDS", "PALMS"), bty="n", cex=cex, border = c(unique(col.af$col),"#a3ae2c"))
 circos.clear()
+legend("topleft", 
+       "a) Afrotropics", 
+       bty = "n",
+       cex = 2)
 dev.off()
 
 #--------------------------------------------------
 
 #### FIGURE 4: TRAIT MATCHING RELATIONSHIPS
-setEPS() ## Open EPS space
-postscript("figs/TraitMatching.eps")
 
 ## Neotropics
-
-cex = 1
+pdf("publicationFigs/Figure5.pdf", 
+    width = 15, height = 10, pointsize = 15)
+cex = 1.5
 layout(matrix(c(1,2,3,4,5,6), 2, 3, byrow = TRUE))
-par(las = 1)
+par(las = 1, mar = c(5,5,2.5,1))
 # Plots all dataset 
 plot(log1p(neo$frugBodyMASS)~log1p(neo$FruitLength_cm),
      xlab="Log[ fruit length (cm) ]", 
      ylab="Log[ median body mass (g) ]", 
      pch = 16,
      col = "grey",
-     cex = cex,
+     cex = 1,
      xlim = c(0,4), 
      ylim = c(0,15),
-     main = "All species", cex.lab = cex)
+     main = "All species", 
+     cex.main = 2,
+     cex.axis = 1.2,
+     cex.lab = cex)
 points(matchTraitsNeo$frugBodyMASS~matchTraitsNeo$FruitLength_cm, 
        pch = 16, 
        col =  col.neo,
@@ -334,7 +347,7 @@ points(matchTraitsNeo$frugBodyMASS~matchTraitsNeo$FruitLength_cm,
 #            lwd = 4, 
 #            lty = 1)
 #legend("bottomright", "p = 0.08", cex = cex)
-#legend(-0.5,16, "a)", cex = cex, bty = "n")
+legend(-0.8,16, "a", cex = 2*cex, bty = "n")
 
 # Plots bird dataset
 bird.data <- frugiv.am[frugiv.am$PALM %in% matchTraitsNeo$PALM[matchTraitsNeo$frugClass == "BIRDS"],]
@@ -346,20 +359,24 @@ plot(log1p(frugBodyMASS)~log1p(FruitLength_cm),
      ylab="Log[ median body mass (g) ]", 
      pch = 16, 
      col = "grey",
-     cex = cex, 
+     cex = 1, 
      xlim = c(0,4), 
      ylim = c(0,15),
-     main = "Birds",cex.lab = cex)
+     main = "Birds",
+     cex.main = 2,
+     cex.axis = 1.2,
+     cex.lab = cex)
 points(frugBodyMASS~FruitLength_cm, 
        data = matchTraitsNeo[matchTraitsNeo$frugClass == "BIRDS",],
        pch = 16, 
        col =  col.neo,
-       xlim = c(0,4), ylim = c(0,15),
+       xlim = c(0,4), 
+       ylim = c(0,15),
        cex = 1.5)
 #ablineclip(birds.neo.lm.palm, col = alpha(col.neo, 0.9), 
 #x1 = 0.2,x2 = 2.6, lwd = 4, lty = 2)
 #legend("bottomright", "p = 0.38", cex = cex)
-#legend(-0.5,16, "b)", cex = cex, bty = "n")
+legend(-0.8,16, "b", cex = 2*cex, bty = "n")
 
 # Plots mammal dataset 
 
@@ -371,10 +388,12 @@ plot(log1p(frugBodyMASS) ~ log1p(FruitLength_cm),
      ylab="Log[ median body mass (g) ]", 
      pch = 16, 
      col = "grey",
-     cex = cex,
+     cex = 1,
      xlim = c(0,4), 
      ylim = c(0,15),
      main = "Mammals",
+     cex.main = 2,
+     cex.axis = 1.2,
      cex.lab = cex)
 points(frugBodyMASS ~ FruitLength_cm , 
        data = matchTraitsNeo[matchTraitsNeo$frugClass == "MAMMAL",],
@@ -385,7 +404,7 @@ points(frugBodyMASS ~ FruitLength_cm ,
 #ablineclip(mammal.neo.lm.palm, col = alpha(col.neo, 0.9), 
 # x1 = 0.2, x2 = 3, lwd = 4, lty = 4)
 #legend("bottomright", "p = 0.89", cex = cex)
-#legend(-0.5,16, "c)", cex = cex, bty = "n")
+legend(-0.8,16, "c", cex = 2*cex, bty = "n")
 
 ## Afrotropics 
 
@@ -397,9 +416,12 @@ plot(log1p(frugBodyMASS)~log1p(FruitLength_cm),
      ylab="Log[ median body mass (g) ]", 
      pch = 16,
      col = "grey",
-     cex = cex, xlim = c(0,4),
+     cex = 1, 
+     xlim = c(0,4),
      ylim = c(0,15),
      main = "All species",
+     cex.main = 2,
+     cex.axis = 1.2,
      cex.lab = cex)
 points(matchTraitsAfr$frugBodyMASS~ matchTraitsAfr$FruitLength_cm, 
        pch = 16, 
@@ -413,7 +435,7 @@ ablineclip(LmAllAfr,
            x2 = 2.6, 
            lwd = 4)
 #legend("bottomright", "p = 0.02", cex = cex)
-#legend(-0.5,16, "d)", cex = cex, bty = "n")
+legend(-0.8,16,"d", cex = 2*cex, bty = "n")
 
 # Plots bird dataset
 
@@ -426,10 +448,12 @@ plot(log1p(frugBodyMASS)~log1p(FruitLength_cm),
      ylab="Log[ median body mass (g) ]", 
      pch = 16, 
      col = "grey", 
-     cex = cex, 
+     cex = 1, 
      xlim = c(0,4), 
      ylim = c(0,15),
      main = "Birds", 
+     cex.main = 2,
+     cex.axis = 1.2,
      cex.lab = cex)
 points(frugBodyMASS ~ FruitLength_cm, 
        data = matchTraitsAfr[matchTraitsAfr$frugClass == "BIRDS",],
@@ -445,7 +469,7 @@ ablineclip(LmBIRDAfr,
            lwd = 4,
            lty = 1)
 # legend("bottomright", "p = 0.03", cex = cex)
-# legend(-0.5,16, "e)", cex = cex, bty = "n")
+legend(-0.8,16, "e", cex = 2*cex, bty = "n")
 
 # Plots mammal dataset 
 
@@ -457,10 +481,12 @@ plot(log1p(frugBodyMASS) ~ log1p(FruitLength_cm),
      ylab="Log[ median body mass (g) ]", 
      pch = 16,
      col = "grey", 
-     cex = cex,
+     cex = 1,
      xlim = c(0,4), 
      ylim = c(0,15),
      main = "Mammals",
+     cex.main = 2,
+     cex.axis = 1.2,
      cex.lab = cex)
 points(frugBodyMASS ~ FruitLength_cm, 
        data = matchTraitsAfr[matchTraitsAfr$frugClass == "MAMMAL",],
@@ -476,7 +502,7 @@ ablineclip(LmMAMMALAfr,
            lwd = 4, 
            lty = 1)
 # legend("bottomright", "p=0.04", cex = cex)
-# legend(-0.5,16, "f)", cex = cex, bty = "n")
+legend(-0.8,16,"f", cex = 2*cex, bty = "n")
 dev.off()
 
 
@@ -486,24 +512,22 @@ dev.off()
 
 
 # 1)  Palm degree (i.e. frugivore interactions) in function of No.Studies
-
-setEPS()
-postscript("figs/InteractionsVsStudies.eps")
+pdf("AppendixFiles/FigureS2.pdf", width = 10, height = 10)
 par(las = 1, mar = c(6,6,2,2))
 plot(SCTableNeo$NoInteractions~SCTableNeo$NoStudies, 
      col = col.neo, 
      pch = 16, 
      cex = 1.5,
-     xlab = "No. studies",
+     xlab = "Number of articles",
      ylab = "Palm degree",
      xlim = c(0,25),
-     cex.lab = 1.5, 
+     cex.lab = 2, 
      cex.axis = 1.5)
 plotrix::ablineclip(LmSCTable$Neotropics,
                     x1 = 1,
                     x2 = max(SCTableNeo$NoStudies),
                     col = col.neo,
-                    lwd = 3
+                    lwd = 4
 )
 points(SCTableAfr$NoInteractions~SCTableAfr$NoStudies, 
        col = col.afro, 
@@ -513,10 +537,21 @@ plotrix::ablineclip(LmSCTable$Afrotropics,
                     x1 = 1,
                     x2 = max(SCTableAfr$NoStudies),
                     col = col.afro,
-                    lwd = 3)
+                    lwd = 4)
 legend("bottomright", 
        col = c(col.neo, col.afro), 
        pch = c(16,16),
        bty = "n",
+       cex = 2,
        c("Neotropics" ,"Afrotropics"))
 dev.off()
+
+### Appendix figure 2 (composite)
+
+layout(matrix(c(1:9), 3, 3, byrow = TRUE))
+sapply(rownames(SCTableNeo[!SCTableNeo$NoStudies == 1 & !SCTableNeo$NoInteractions == 1 ,]),
+       function(x) makeFrugPlot(neo, x))
+
+
+layout(matrix(c(1:9), 3, 3, byrow = TRUE))
+sapply(rownames(SCTableAfr[!SCTableAfr$NoStudies == 1,]), function(x) makeFrugPlot(afr, x))
