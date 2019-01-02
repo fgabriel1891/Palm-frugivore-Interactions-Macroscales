@@ -1,4 +1,7 @@
 
+[![DOI](https://zenodo.org/badge/121655873.svg)](https://zenodo.org/badge/latestdoi/121655873)
+
+
 ## Source code to replicate the analisis and figures presented in the article:
 
 ----------
