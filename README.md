@@ -1,7 +1,7 @@
 
-# Source code to replicate the analisis and figures presented in the article:
+## Source code to replicate the analisis and figures presented in the article:
 
-## A synthesis of animal-mediated seed dispersal of palms reveals distinct biogeographic differences in species interactions  *The Journal of Biogeography. 2018.(in revision)* 
+## A synthesis of animal-mediated seed dispersal of palms reveals distinct biogeographic differences in species interactions. 2019  *The Journal of Biogeography. 
 
 ### Gabriel Muñoz<sup>1</sup>,*, Kristian Trøjelsgaard<sup>2</sup> & W. Daniel Kissling <sup>1</sup>
 
@@ -11,7 +11,25 @@
 
 ----------
 
-### 1) Structure of this repository 
+### 1) Instructions 
+
+1) Clone or download the repository
+
+2) Open the R container folder 
+
+3) Run ReplicateAnalisis.R and ReplicateFigures.R scripts (**other scripts are sourced within**)
+
+**NOTE**:  Modularity replicates are TIME CONSUMING, currently those are commented in ReplicateAnalisis.R // If you want to re-run them and see the output uncomment those first. 
+
+4) Please open an issue for any comments or questions. 
+
+### 2) Contact: 
+
+[Gabriel Muñoz](mailto:fgabriel1891@gmail.com)
+
+-------------
+
+### Repository structure
 
 ```
 /JBI_Palms_REPO
@@ -51,28 +69,6 @@
 |-- README.pdf
 
 ```
-
-### 2) Instructions 
-
-1) Clone or download the repository
-
-2) Open the R container folder 
-
-3) Run ReplicateAnalisis.R and ReplicateFigures.R scripts (**other scripts are sourced within**)
-
-**NOTE**:  Modularity replicates are TIME CONSUMING, currently those are commented in ReplicateAnalisis.R // If you want to re-run them and see the output uncomment those first. 
-
-4) Please open an issue to report comments and/or bugs. 
-
-#### Contact: 
-
-[Gabriel Muñoz](mailto:fgabriel1891@gmail.com)
-
--------------
-
-
-
-
 
 
 
