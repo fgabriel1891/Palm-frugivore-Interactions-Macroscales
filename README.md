@@ -1,6 +1,4 @@
 
-https://doi.org/10.5061/dryad.rd46vq3
-
 ## Source code to replicate the analisis and figures presented in the article:
 
 ----------
@@ -30,6 +28,9 @@ Gabriel Muñoz<sup>1</sup>,*, Kristian Trøjelsgaard<sup>2</sup> & W. Daniel Kis
 [Gabriel Muñoz](mailto:fgabriel1891@gmail.com)
 
 -------------
+
+Find the original publication dataset in DRYAD: https://doi.org/10.5061/dryad.rd46vq3
+
 
 ### Repository structure
 
