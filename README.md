@@ -3,15 +3,11 @@
 
 ----------
 
-A synthesis of animal-mediated seed dispersal of palms reveals distinct biogeographic differences in species interactions. 2019  *The Journal of Biogeography*. DOI 10.1111/jbi.13493
+Gabriel Muñoz<sup>1</sup>,*, Kristian Trøjelsgaard<sup>2</sup> & W. Daniel Kissling <sup>1</sup>. 2019. **A synthesis of animal-mediated seed dispersal of palms reveals distinct biogeographic differences in species interactions.** *The Journal of Biogeography*. DOI 10.1111/jbi.13493
 
-----------
+**1: Institute for Biodiversity and Ecosystem Dynamics (IBED), University of Amsterdam, P.O. Box 94248, 1090 GE Amsterdam, The Netherlands**
 
-### Gabriel Muñoz<sup>1</sup>,*, Kristian Trøjelsgaard<sup>2</sup> & W. Daniel Kissling <sup>1</sup>
-
-#### 1: Institute for Biodiversity and Ecosystem Dynamics (IBED), University of Amsterdam, P.O. Box 94248, 1090 GE Amsterdam, The Netherlands
-
-#### 2: Faculty of Engineering and Science, Department of Chemistry and Bioscience, Section of Biology and Environmental Science, University of Aalborg. Denmark
+**2: Faculty of Engineering and Science, Department of Chemistry and Bioscience, Section of Biology and Environmental Science, University of Aalborg. Denmark**
 
 ----------
 
