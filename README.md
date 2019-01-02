@@ -1,7 +1,7 @@
 
 ## Source code to replicate the analisis and figures presented in the article:
 
-## A synthesis of animal-mediated seed dispersal of palms reveals distinct biogeographic differences in species interactions. 2019  *The Journal of Biogeography. 
+## A synthesis of animal-mediated seed dispersal of palms reveals distinct biogeographic differences in species interactions. 2019  *The Journal of Biogeography*. DOI 10.1111/jbi.13493
 
 ### Gabriel Muñoz<sup>1</sup>,*, Kristian Trøjelsgaard<sup>2</sup> & W. Daniel Kissling <sup>1</sup>
 
