@@ -41,7 +41,7 @@ col.neo  <- "#998ec3"
 pdf("publicationFigs/Figure2.pdf",
     width = 15, height = 10, pointsize = 15)
 layout(matrix(c(1,2), 1,2, byrow = T))
-par(las = 1, mar =  c(2,6,2,2) ) # plot settings 
+par(las = 1, mar =  c(6,6,2,2) ) # plot settings 
 plot(spAcum1, 
      ylim = c(0,700),
      xlim = c(0,800),
@@ -161,7 +161,7 @@ dev.off()
 #--------------------------------------------------
 
 #### FIGURE 4: REGIONAL META-NETWORKS
-pdf("publicationFigs/Net.pdf", width = 10, height = 20)
+pdf("publicationFigs/Figure4.pdf", width = 10, height = 20)
 layout(matrix(c(1,2), 2, 1, byrow = T))
 ## Neotropics
 par(mar = c(1,17,2,2), 
@@ -236,7 +236,7 @@ circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) {
 # highlight.sector(unique(plot.america$Frug_Family[plot.america$CLASS == "REPTILES"]), track.index = 2, col = "#c44031" )
 #legend("topleft", "a) Neotropics", bty="n")
 legend("bottomleft", fill=c(unique(colNeo$col),"#a3ae2c"), 
-       legend=c("MAMMALS", "FISH","BIRDS", "REPTILES","BEETLES","CRABS", "PALMS"),
+       legend=c("BIRDS", "MAMMALS","FISH", "BEETLES","REPTILES","CRABS", "PALMS"),
        bty="n", 
        cex=1.3, border = c(unique(colNeo$col),"#a3ae2c"))
 legend("topleft", 
@@ -307,7 +307,7 @@ circos.trackPlotRegion(track.index = 1, panel.fun = function(x, y) {
 #legend("bottomleft", fill=c(unique(col.af$col),"#a3ae2c"), legend=c("MAMMALS","BIRDS", "PALMS"), bty="n", cex=cex, border = c(unique(col.af$col),"#a3ae2c"))
 circos.clear()
 legend("topleft", 
-       "a) Afrotropics", 
+       "b) Afrotropics", 
        bty = "n",
        cex = 2)
 dev.off()
@@ -347,7 +347,7 @@ points(matchTraitsNeo$frugBodyMASS~matchTraitsNeo$FruitLength_cm,
 #            lwd = 4, 
 #            lty = 1)
 #legend("bottomright", "p = 0.08", cex = cex)
-legend(-0.8,16, "a", cex = 2*cex, bty = "n")
+#legend(-0.8,16, "a", cex = 2*cex, bty = "n")
 
 # Plots bird dataset
 bird.data <- frugiv.am[frugiv.am$PALM %in% matchTraitsNeo$PALM[matchTraitsNeo$frugClass == "BIRDS"],]
@@ -376,7 +376,7 @@ points(frugBodyMASS~FruitLength_cm,
 #ablineclip(birds.neo.lm.palm, col = alpha(col.neo, 0.9), 
 #x1 = 0.2,x2 = 2.6, lwd = 4, lty = 2)
 #legend("bottomright", "p = 0.38", cex = cex)
-legend(-0.8,16, "b", cex = 2*cex, bty = "n")
+#legend(-0.8,16, "b", cex = 2*cex, bty = "n")
 
 # Plots mammal dataset 
 
@@ -404,7 +404,7 @@ points(frugBodyMASS ~ FruitLength_cm ,
 #ablineclip(mammal.neo.lm.palm, col = alpha(col.neo, 0.9), 
 # x1 = 0.2, x2 = 3, lwd = 4, lty = 4)
 #legend("bottomright", "p = 0.89", cex = cex)
-legend(-0.8,16, "c", cex = 2*cex, bty = "n")
+#legend(-0.8,16, "c", cex = 2*cex, bty = "n")
 
 ## Afrotropics 
 
@@ -435,7 +435,7 @@ ablineclip(LmAllAfr,
            x2 = 2.6, 
            lwd = 4)
 #legend("bottomright", "p = 0.02", cex = cex)
-legend(-0.8,16,"d", cex = 2*cex, bty = "n")
+#legend(-0.8,16,"d", cex = 2*cex, bty = "n")
 
 # Plots bird dataset
 
@@ -469,7 +469,7 @@ ablineclip(LmBIRDAfr,
            lwd = 4,
            lty = 1)
 # legend("bottomright", "p = 0.03", cex = cex)
-legend(-0.8,16, "e", cex = 2*cex, bty = "n")
+#legend(-0.8,16, "e", cex = 2*cex, bty = "n")
 
 # Plots mammal dataset 
 
@@ -502,7 +502,7 @@ ablineclip(LmMAMMALAfr,
            lwd = 4, 
            lty = 1)
 # legend("bottomright", "p=0.04", cex = cex)
-legend(-0.8,16,"f", cex = 2*cex, bty = "n")
+#legend(-0.8,16,"f", cex = 2*cex, bty = "n")
 dev.off()
 
 
@@ -550,8 +550,8 @@ dev.off()
 
 layout(matrix(c(1:9), 3, 3, byrow = TRUE))
 sapply(rownames(SCTableNeo[!SCTableNeo$NoStudies == 1 & !SCTableNeo$NoInteractions == 1 ,]),
-       function(x) makeFrugPlot(neo, x))
+       function(x) makeFrugPlot(neo1, x))
 
 
 layout(matrix(c(1:9), 3, 3, byrow = TRUE))
-sapply(rownames(SCTableAfr[!SCTableAfr$NoStudies == 1,]), function(x) makeFrugPlot(afr, x))
+sapply(rownames(SCTableAfr42), function(x) makeFrugPlot(afr1, x))

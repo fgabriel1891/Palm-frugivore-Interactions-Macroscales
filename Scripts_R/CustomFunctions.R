@@ -7,7 +7,8 @@ source("Scripts_R/Beckett2016LPA_wb_plus.R")
 
 
 makeSC = function(dataset, x){ 
-  SROm = droplevels(dataset[dataset$PALM == x,])
+  SROm = dataset[dataset$PALM == x,]
+  SROm = droplevels(SROm)
   SROm1 = table(SROm$referenceKey,SROm$FRUGIVORE)
   Acum = vegan::specpool(SROm1)[c("Species", "chao", "chao.se")]
   RetObj = c("SC" = round(Acum$Species/Acum$chao, 3) * 100, 

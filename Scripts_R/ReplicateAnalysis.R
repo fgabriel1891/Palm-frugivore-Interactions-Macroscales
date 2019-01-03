@@ -112,11 +112,12 @@ afr1 = droplevels(afr1) # Drop extra "PALM" levels
 
 SCTableNeo = data.frame(t(sapply(as.character(unique(neo1$PALM)), 
                                   function(x) makeSC(neo1, x)))) # Neotropics
-SCTableNeo[SCTableNeo$NoStudies > 1 & SCTableNeo$NoInteractions > 1,] # Show only those with more than 1 study and 1 interaction
+write.csv(SCTableNeo[SCTableNeo$NoStudies > 1 & SCTableNeo$NoInteractions > 1,], 
+          "NeoS1.csv") # Show only those with more than 1 study and 1 interaction
 
 SCTableAfr = data.frame(t(sapply(as.character(unique(afr1$PALM)), 
                                  function(x) makeSC(afr1, x)))) # Afrotropics
-SCTableAfr[SCTableAfr$NoStudies > 1 & SCTableAfr$NoInteractions > 1,] # Show only those with more than 1 study and 1 interaction
+SCTableAfr[SCTableAfr$NoStudies > 1 & SCTableAfr$NoInteractions > 1,]# Show only those with more than 1 study and 1 interaction
 
 
 
@@ -186,12 +187,13 @@ BotCountriesTable$ratio <- bot$ratio[match( BotCountriesTable$id, bot$bot)]
 BotCountriesTable$total <- bot$int[match( BotCountriesTable$id, bot$bot)]
 
   
-ma1 = table(BotCountry$botanicalCountry, BotCountry$PALM)
+ma1 = table(BotCountry$botanicalCountry, BotCountry$InteractionID)
 ma1[ma1>=1]=1
 
 
+BotCountriesTable$rich = bot$total[match(BotCountriesTable$id,bot$bot)] # Add total palm richness 
 BotCountriesTable$PalmPerC = rowSums(ma1)
-BotCountriesTable$IntPPalm = BotCountriesTable$total/BotCountriesTable$PalmPerC
+BotCountriesTable$IntPPalm = BotCountriesTable$PalmPerC/BotCountriesTable$rich
 
 SCALL = rbind(SCTableAfr[SCTableAfr$NoStudies > 1 & SCTableAfr$NoInteractions > 1,] , 
               SCTableNeo[-which(rownames(SCTableNeo) == "Elaeis guineensis"),] # Because its found in both datasets
@@ -203,13 +205,12 @@ world.checklist$SC[which(is.na(world.checklist$SC))] = 0 # For those species wit
 aggBR = aggregate( world.checklist$SC, by = list("BC" = world.checklist$BOT_Country) , FUN = mean)# Average SC per botanical country (includei)
 
 BotCountriesTable$SCm = aggBR$x[match(BotCountriesTable$id,aggBR$BC)]  # Match averages 
-BotCountriesTable$rich = bot$total[match(BotCountriesTable$id,bot$bot)] # Add total palm richness 
 BotCountriesTable$KG = BotCountriesTable$rich/ BotCountriesTable$SCm# Calculate KG as the inverse of the ratio SC / richness
 BotCountriesTable$KG = BotCountriesTable$KG/0.0967258420 # relative to Colombia
 BotCountriesTable$KG2 = BotCountriesTable$IntPPalm/BotCountriesTable$rich
 
 
-#  write.csv(x = BotCountriesTable, "BotCount.csv")
+# write.csv(x = BotCountriesTable, "BotCount.csv")
 
 #--------------------------------------------------
 #### Comparison of networks
